@@ -18,8 +18,13 @@ end
 figure(1)
 subplot(121)
 imshow(double(rayure))
+title('Motif original')
 subplot(122)
 plot(y,'linewidth',4)
+xlabel('n : distance les deux points')
+title('fonction de correlation') % entre le motif original et son erosion par une pair de point
+
+print('-dtex','data/tex/periode.tex')
 
 
 

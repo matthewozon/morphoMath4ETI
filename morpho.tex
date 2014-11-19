@@ -63,17 +63,43 @@ Quelques propri\'{e}t\'{e}s int\^{e}ressantes de la dilatation et de l'\'{e}rosi
 	\item dualit\'{e} : $ E_B\left(X\right) = \overline{ D_B\left(\overline{X}\right)}$
 \end{itemize}
 
+\paragraph{Application de l'\'{e}rosion : d\'{e}tection de la p\'{e}riode d'un motif} En choisissant  judicieusement un \'{e}l\'{e}ment structurant, on peut utiliser l'\'{e}rosion pour d\'{e}tecter la p\'{e}riode d'un motif dans une image. Par exemple pour une image comme celle de la figure~\ref{periode}, on peut utiliser un \'{e}l\'{e}ment s structurant ligne $B_{\text{ligne}}^{\left(n\right)}$ tel que : 
+\begin{displaymath}
+B_{\text{ligne}}^{\left(n\right)} = \begin{array}{|c|}
+	\hline 1  \\
+	\hline
+\end{array}
+\underset{\text{n z\'{e}ros}}{\underbrace{
+\begin{array}{ccc}
+	\hline  0 & \ldots & 0   \\
+	\hline
+\end{array}}}
+\begin{array}{|c|}
+	\hline 1  \\
+	\hline
+\end{array}
+\end{displaymath}
+et en utilisant une formule de covariance comme : 
+\begin{displaymath}
+	C_{B_{\text{ligne}}^{\left(n\right)}}\left(X\right)= \frac{1}{\underset{\text{pixel }\left(i,j\right)}{\sum} X\left(i,j\right) } \underset{\text{pixel }\left(i,j\right)}{\sum} E_{B_{\text{ligne}}^{\left(n\right)}}\left(X\right)\left(i,j\right) 
+\end{displaymath}
+\begin{figure}[h]
+\scalebox{0.66}{\input{data/tex/periode.tex}}
+%\includegraphics[width=0.45\textwidth]{data/pics/rayure.png}
+\caption{Image de rayure verticale a droite et fonction de corr\'{e}lation (morphologique) entre l'image originale et son \'{e}rod\'{e}e par une pair de point distante de n}
+\label{periode}
+\end{figure}
 \begin{figure}[h]
 	\centering
 \scalebox{0.45}{\input{data/tex/erosionSrc.tex}}\scalebox{0.45}{\input{data/tex/erosion.tex}}
-	\caption{Image d'origine a gauche et resultat de l'erosion par la boule unite au sens du 4-voisinage a droite}
+	\caption{Image d'origine a gauche et r\'{e}sultat de l’\'{e}rosion par la boule unit\'{e} au sens du 4-voisinage \`{a} droite}
 	\label{erosion}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\scalebox{0.45}{\input{data/tex/dilatationSrc.tex}}\scalebox{0.45}{\input{data/tex/dilatation.tex}}
-	\caption{Image d'origine a gauche et r\'{e}sultat de la dilatation par la boule unit\'{e} au sens du 4-voisinage a droite}
+	\caption{Image d'origine a gauche et r\'{e}sultat de la dilatation par la boule unit\'{e} au sens du 4-voisinage \`{a} droite}
 	\label{dilatation}
 \end{figure}
 
@@ -83,14 +109,14 @@ Quelques propri\'{e}t\'{e}s int\^{e}ressantes de la dilatation et de l'\'{e}rosi
 \clearpage
 \section{Ouverture, fermeture, squel\'{e}tisation}
 
-Les op\'{e}rateurs d'ouverture $\mathcal{O}$, de fermeture $\mathcal{F}$ et de sequ\'{e}letisation $\mathcal{S}$ sont respectivement defini comme suit : 
+Les op\'{e}rateurs d'ouverture $\mathcal{O}$, de fermeture $\mathcal{F}$ et de sequ\'{e}letisation $\mathcal{S}$ sont respectivement d\'{e}fini comme suit : 
 
 \begin{align*}	
 	X\circ B &=  D_{B^t}\left(E_{B}\left(X\right)\right) \\
 	X\bullet B &= E_{B^t}\left(D_{B}\left(X\right)\right) \\
 	\mathcal{S}_{B}\left(X\right) &= \underset{n\in \mathbb{N}}{\cup} \left(E_{B_n}\left(X\right) \backslash \left(E_{B_n}\left(X\right)\right)\circ B \right)
 \end{align*}
-o\`{u} $B_n =\underset{n fois}{\underbrace{B\oplus\ldots\oplus B}}$ et par convention $B_0$ est l'ensemble de un pixel \`{a} l'origine. En pratique, on ne fait pas tendre $n$ vers $+\infty$, mais on s'arr\^{e}te quand on atteint idempotence.
+o\`{u} $B_n =\underset{n \text{ fois}}{\underbrace{B\oplus\ldots\oplus B}}$ et par convention $B_0$ est l'ensemble de un pixel \`{a} l'origine. En pratique, on ne fait pas tendre $n$ vers $+\infty$, mais on s'arr\^{e}te quand on atteint idempotence.
 
 Quelques propri\'{e}t\'{e}s de l'ouverture et de la fermeture
 \begin{itemize}
@@ -100,6 +126,8 @@ Quelques propri\'{e}t\'{e}s de l'ouverture et de la fermeture
 \end{itemize}
 
 Pour d\'{e}montrer ces propri\'{e}t\'{e}s, il suffit de les ecrire avec les definitions... ce qui peut etre un exercice.
+
+Voici quelques exemples d'applications d'ouverture et de fermeture, figures~\ref{piece} et \ref{pieceOF}.
 
 
 \begin{figure}[h]
@@ -113,9 +141,31 @@ Pour d\'{e}montrer ces propri\'{e}t\'{e}s, il suffit de les ecrire avec les defi
 \caption{En haut) image ouverte, en bas) image ferm\'{e}e}
 \label{pieceOF}
 \end{figure}
-%\includegraphics[width=0.45\textwidth]{data/pics/erosionSrc.tex}
+
+
+\clearpage
+
+\paragraph{Exemple d'utilisation pour du d\'{e}bruitage} Dans le cas ou une image est compos\'{e}e de larges morceaux de m\^{e}me niveau (0 ou 1) avec quelques pixel alt\`{e}res, il est possible de faire du d\'{e}bruitage a partir des op\'{e}rations d'ouverture et de fermeture. Voici un exemple sur les figures~\ref{debruitageOrigine} montrant image d'origine et image bruit\'{e}e, figure~\ref{debruitageSteps} gauche)  la premi\`{e}re \'{e}tape enlevant le bruit du fond (noir) et figure~\ref{debruitageSteps} droite) l'\'{e}tape d\'{e}bruitant l'objet (blanc).
 
 \begin{figure}[h]
+\hspace{-0.2\textwidth}\input{data/tex/debruitageOrigine.tex}
+\vspace{-40mm}
+	\caption{Image d'origine \`{a} gauche, et, \`{a} droite, image bruit\'{e}e.}
+	\label{debruitageOrigine}
+\end{figure}
+
+\begin{figure}[h]
+\hspace{-0.2\textwidth}\input{data/tex/debruitageSteps.tex}
+\vspace{-40mm}
+	\caption{\'{E}tapes du processus de filtrage : gauche) image apr\`{e}s ouverture, droite) image apr\`{e}s ouverture puis fermeture}
+	\label{debruitageSteps}
+\end{figure}
+
+\paragraph{Remarque} On peut remarquer que le filtrage n'est pas vraiment parfait, m\^{e}me si le bruit et compl\`{e}tement parti. En effet, les objets ont \'{e}t\'{e}s déform\'{e}s pendant les \'{e}tapes.
+
+\clearpage
+\paragraph{Application : squelettisation} ~~~
+\begin{figure}[h!]
 \hspace{-0.2\textwidth}\input{data/tex/rectSkel.tex}
 \vspace{-40mm}
 	\caption{Image d'origine, un rectangle, \`{a} gauche, et, \`{a} droite, le squelette.}

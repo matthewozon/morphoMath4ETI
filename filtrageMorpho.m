@@ -15,8 +15,11 @@ imBinNoisy = xor(imBin,N);
 figure(1)
 subplot(121)
 imshow(double(imBin))
+title('Image sans bruit')
 subplot(122)
 imshow(double(imBinNoisy))
+title('Image avec bruit')
+print('-dtex','data/tex/debruitageOrigine.tex')
 
 
 %transform image
@@ -28,14 +31,30 @@ imFiltered = imopen(imBinNoisy,B); %remove salt
 figure(2)
 subplot(121)
 imshow(double(imBin))
+title('Image sans bruit')
 subplot(122)
 imshow(double(imFiltered))
-imFiltered = imclose(imFiltered,B); %remove pepper
+title('filtrage du fond par ouverture')
+print('-dtex','data/tex/debruitageStep1.tex')
+
+imFiltered2 = imclose(imFiltered,B); %remove pepper
 figure(3)
 subplot(121)
-imshow(double(imFiltered))
+imshow(double(imFiltered2))
+title('Image filtree par une ouverture puis fermeture')
 subplot(122)
-imshow(double(xor(imBin,imFiltered)))
+imshow(double(xor(imBin,imFiltered2)))
+title('Difference entre image originale et filtree')
+print('-dtex','data/tex/debruitageStep2.tex')
+
+figure(4)
+subplot(121)
+imshow(double(imFiltered))
+title('filtrage du fond par ouverture')
+subplot(122)
+imshow(double(imFiltered2))
+title('Image filtree par une ouverture puis fermeture')
+print('-dtex','data/tex/debruitageSteps.tex')
 
 %figure(3)
 %imshow(abs(double(imBin) - double(imFiltered)) )
