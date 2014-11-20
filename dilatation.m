@@ -35,12 +35,12 @@ imRes2 = imdilate(imBin,Bt);
 %original
 figure(1)
 imshow(imBin)
-print('-dtex','data/tex/dilatationSrc.tex')
+%print('-dtex','data/tex/dilatationSrc.tex')
 
 %implemented method
 figure(2)
 imshow (imRes)
-print('-dtex','data/tex/dilatation.tex')
+%print('-dtex','data/tex/dilatation.tex')
 
 %octave method
 figure(3)
