@@ -63,50 +63,7 @@ Quelques propri\'{e}t\'{e}s int\^{e}ressantes de la dilatation et de l'\'{e}rosi
 	\item dualit\'{e} : $ E_B\left(X\right) = \overline{ D_B\left(\overline{X}\right)}$
 \end{itemize}
 
-\paragraph{Application de l'\'{e}rosion : d\'{e}tection de la p\'{e}riode d'un motif} En choisissant  judicieusement un \'{e}l\'{e}ment structurant, on peut utiliser l'\'{e}rosion pour d\'{e}tecter la p\'{e}riode d'un motif dans une image. Par exemple pour une image comme celle de la figure~\ref{periode}, on peut utiliser un \'{e}l\'{e}ment s structurant ligne $B_{\text{ligne}}^{\left(n\right)}$ tel que : 
-\begin{displaymath}
-B_{\text{ligne}}^{\left(n\right)} = \begin{array}{|c|}
-	\hline 1  \\
-	\hline
-\end{array}
-\underset{\text{n z\'{e}ros}}{\underbrace{
-\begin{array}{ccc}
-	\hline  0 & \ldots & 0   \\
-	\hline
-\end{array}}}
-\begin{array}{|c|}
-	\hline 1  \\
-	\hline
-\end{array}
-\end{displaymath}
-et en utilisant une formule de covariance comme : 
-\begin{displaymath}
-	C_{B_{\text{ligne}}^{\left(n\right)}}\left(X\right)= \frac{1}{\underset{\text{pixel }\left(i,j\right)}{\sum} X\left(i,j\right) } \underset{\text{pixel }\left(i,j\right)}{\sum} E_{B_{\text{ligne}}^{\left(n\right)}}\left(X\right)\left(i,j\right) 
-\end{displaymath}
-\begin{figure}[h]
-\scalebox{0.66}{\input{data/tex/periode.tex}}
-%\includegraphics[width=0.45\textwidth]{data/pics/rayure.png}
-\caption{Image de rayure verticale a droite et fonction de corr\'{e}lation (morphologique) entre l'image originale et son \'{e}rod\'{e}e par une pair de point distante de n}
-\label{periode}
-\end{figure}
-\begin{figure}[h]
-	\centering
-\scalebox{0.45}{\input{data/tex/erosionSrc.tex}}\scalebox{0.45}{\input{data/tex/erosion.tex}}
-	\caption{Image d'origine a gauche et r\'{e}sultat de l’\'{e}rosion par la boule unit\'{e} au sens du 4-voisinage \`{a} droite}
-	\label{erosion}
-\end{figure}
 
-\begin{figure}[h]
-	\centering
-	\scalebox{0.45}{\input{data/tex/dilatationSrc.tex}}\scalebox{0.45}{\input{data/tex/dilatation.tex}}
-	\caption{Image d'origine a gauche et r\'{e}sultat de la dilatation par la boule unit\'{e} au sens du 4-voisinage \`{a} droite}
-	\label{dilatation}
-\end{figure}
-
-
-
-
-\clearpage
 \section{Ouverture, fermeture, squel\'{e}tisation}
 
 Les op\'{e}rateurs d'ouverture $\mathcal{O}$, de fermeture $\mathcal{F}$ et de sequ\'{e}letisation $\mathcal{S}$ sont respectivement d\'{e}fini comme suit : 
@@ -114,9 +71,8 @@ Les op\'{e}rateurs d'ouverture $\mathcal{O}$, de fermeture $\mathcal{F}$ et de s
 \begin{align*}	
 	X\circ B &=  D_{B^t}\left(E_{B}\left(X\right)\right) \\
 	X\bullet B &= E_{B^t}\left(D_{B}\left(X\right)\right) \\
-	\mathcal{S}_{B}\left(X\right) &= \underset{n\in \mathbb{N}}{\cup} \left(E_{B_n}\left(X\right) \backslash \left(E_{B_n}\left(X\right)\right)\circ B \right)
 \end{align*}
-o\`{u} $B_n =\underset{n \text{ fois}}{\underbrace{B\oplus\ldots\oplus B}}$ et par convention $B_0$ est l'ensemble de un pixel \`{a} l'origine. En pratique, on ne fait pas tendre $n$ vers $+\infty$, mais on s'arr\^{e}te quand on atteint idempotence.
+
 
 Quelques propri\'{e}t\'{e}s de l'ouverture et de la fermeture
 \begin{itemize}
@@ -164,21 +120,7 @@ Voici quelques exemples d'applications d'ouverture et de fermeture, figures~\ref
 \paragraph{Remarque} On peut remarquer que le filtrage n'est pas vraiment parfait, m\^{e}me si le bruit et compl\`{e}tement parti. En effet, les objets ont \'{e}t\'{e}s déform\'{e}s pendant les \'{e}tapes.
 
 \clearpage
-\paragraph{Application : squelettisation} ~~~
-\begin{figure}[h!]
-\hspace{-0.2\textwidth}\input{data/tex/rectSkel.tex}
-\vspace{-40mm}
-	\caption{Image d'origine, un rectangle, \`{a} gauche, et, \`{a} droite, le squelette.}
-	\label{rectSkel}
-\end{figure}
-\begin{figure}[h]
-\hspace{-0.2\textwidth}\input{data/tex/veauSkel.tex}
-\vspace{-40mm}
-	\caption{Image de veau segment\'{e}e, \`{a} gauche, et, \`{a} droite, le squelette.}
-	\label{rectSkel}
-\end{figure}
 
-\clearpage
 
 \subsection{Hit or Miss Transform}
 
@@ -379,6 +321,145 @@ La figure~\ref{distanceAndDilatation} montre le r\'{e}sultat d'une dilatation pa
 	\caption{}
 	\label{distanceAndDilatation}
 \end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Divers applications}
+
+\subsection{Application de l'\'{e}rosion : d\'{e}tection de la p\'{e}riode d'un motif}
+En choisissant  judicieusement un \'{e}l\'{e}ment structurant, on peut utiliser l'\'{e}rosion pour d\'{e}tecter la p\'{e}riode d'un motif dans une image. Par exemple pour une image comme celle de la figure~\ref{periode}, on peut utiliser un \'{e}l\'{e}ment s structurant ligne $B_{\text{ligne}}^{\left(n\right)}$ tel que : 
+\begin{displaymath}
+B_{\text{ligne}}^{\left(n\right)} = \begin{array}{|c|}
+	\hline 1  \\
+	\hline
+\end{array}
+\underset{\text{n z\'{e}ros}}{\underbrace{
+\begin{array}{ccc}
+	\hline  0 & \ldots & 0   \\
+	\hline
+\end{array}}}
+\begin{array}{|c|}
+	\hline 1  \\
+	\hline
+\end{array}
+\end{displaymath}
+et en utilisant une formule de covariance comme : 
+\begin{displaymath}
+	C_{B_{\text{ligne}}^{\left(n\right)}}\left(X\right)= \frac{1}{\underset{\text{pixel }\left(i,j\right)}{\sum} X\left(i,j\right) } \underset{\text{pixel }\left(i,j\right)}{\sum} E_{B_{\text{ligne}}^{\left(n\right)}}\left(X\right)\left(i,j\right) 
+\end{displaymath}
+\begin{figure}[h]
+\scalebox{0.66}{\input{data/tex/periode.tex}}
+%\includegraphics[width=0.45\textwidth]{data/pics/rayure.png}
+\caption{Image de rayure verticale a droite et fonction de corr\'{e}lation (morphologique) entre l'image originale et son \'{e}rod\'{e}e par une pair de point distante de n}
+\label{periode}
+\end{figure}
+\begin{figure}[h]
+	\centering
+\scalebox{0.45}{\input{data/tex/erosionSrc.tex}}\scalebox{0.45}{\input{data/tex/erosion.tex}}
+	\caption{Image d'origine a gauche et r\'{e}sultat de l’\'{e}rosion par la boule unit\'{e} au sens du 4-voisinage \`{a} droite}
+	\label{erosion}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\scalebox{0.45}{\input{data/tex/dilatationSrc.tex}}\scalebox{0.45}{\input{data/tex/dilatation.tex}}
+	\caption{Image d'origine a gauche et r\'{e}sultat de la dilatation par la boule unit\'{e} au sens du 4-voisinage \`{a} droite}
+	\label{dilatation}
+\end{figure}
+\clearpage
+
+
+\subsection{granulom\'{e}trie}
+En morphologie, la granulom\'{e}trie est la mesure de granularit\'{e} qui consiste \`{a} d\'{e}nombrer les grains en fonction de leur tailles. Une approche possible est ``d\'{e}bruiter'' l'image $X$ par des \'{e}l\'{e}ments structurant $B_n$ de plus en plus grand et de compter le nombre de pixels restants. Plus formellement, la fonction granulometrique peut se definir comme l'application $\gamma_n$ pour $n\in\mathbb{n}$ telle que
+\begin{align*}
+	\gamma_n : \mathfrak{X} &\longrightarrow \mathbb{N}\\
+						X     & \longmapsto \left| X \circ B_n \right|
+\end{align*}
+ou $\left|  A \right|$ denote le cardinal de l'ensemble $A$ et $B_n = \underset{\text{n fois}}{\underbrace{B \oplus\ldots\oplus B}}$. Par convention, $B_0$ est le singleton $\{1\}$ centr\'{e} sur lui m\^{e}me.
+On remarque que cette mesure depend du l'\'{e}l\'{e}ment structurant utilis\'{e}.
+
+\subsection{Comptage de connexit\'{e}}
+On consid\`{e}re le graphe $\mathcal{G}=\left(\mathcal{X},\mathcal{E}\right)$ avec $\mathcal{X}$ un ensemble de points et $\mathcal{E}$ un ensemble d'ar\`{e}tes (paires de points).
+Le nombre de connexit\'{e} $N_c$ du graphe $\mathcal{G}$  est d\'{e}finit comme :
+\begin{displaymath}
+	N_c = N_s - N_a + N_f
+\end{displaymath}
+ou $N_s$ est le nombre de sommet ($\left|\mathcal{X}\right|$), $N_a$ le nombre d'ar\^{e}tes ($\left|\mathcal{E}\right|$) et $N_f$ le nombre de faces de $\mathcal{G}$. 
+
+Une face $f$ du graphe $G$ est une cycle de longueur au moins \'{e}gale \`{a} 3 et ne contenant aucun sommet ou ar\`{e}te en son int\'{e}rieur. On appelle cycle une cha\^{i}ne ferm\'{e}e et simple (constitu\'{e}e d'ar\^{e}tes distinctes).
+
+\paragraph{Avec Hit-or-Miss?} Oui il y a une possibilit\'{e}. Il suffit de consid\'{e}rer l'image binaire comme un graphe dont les sommets sont les pixels. En analisant la maille \'{e}l\'{e}mentaire $\begin{array}{|c|c|}  \hline ~  & ~   \\  \hline ~  & ~   \\ \hline \end{array}$, on peut montrer que 
+
+\begin{displaymath}
+	N_c =  \left|X \odot\left\{ 
+	\begin{array}{|c|c|c|}
+	 \hline 1  & 0  \\
+	 \hline 0  & 0  \\
+	\hline
+	\end{array},
+	\begin{array}{|c|c|c|}
+	 \hline 0  & 1  \\
+	 \hline 1  & 1  \\
+	\hline
+	\end{array}
+\right\}\right|+
+\left|X \odot\left\{ 
+	\begin{array}{|c|c|c|}
+	 \hline 1  & 0  \\
+	 \hline 0  & 1  \\
+	\hline
+	\end{array},
+	\begin{array}{|c|c|c|}
+	 \hline 0  & 1  \\
+	 \hline 1  & 0  \\
+	\hline
+	\end{array}
+\right\}\right|-
+\left|X \odot\left\{ 
+	\begin{array}{|c|c|c|}
+	 \hline 1  & 1  \\
+	 \hline 1  & 0  \\
+	\hline
+	\end{array},
+	\begin{array}{|c|c|c|}
+	 \hline 0  & 0  \\
+	 \hline 0  & 1  \\
+	\hline
+	\end{array}
+\right\}\right|
+\end{displaymath}
+\clearpage
+\subsection{Squelette}
+\begin{displaymath}
+	\mathcal{S}_{B}\left(X\right) = \underset{n\in \mathbb{N}}{\cup} \left(E_{B_n}\left(X\right) \backslash \left(E_{B_n}\left(X\right)\right)\circ B \right)
+\end{displaymath}
+o\`{u} $B_n =\underset{n \text{ fois}}{\underbrace{B\oplus\ldots\oplus B}}$ et par convention $B_0$ est l'ensemble de un pixel \`{a} l'origine. En pratique, on ne fait pas tendre $n$ vers $+\infty$, mais on s'arr\^{e}te quand on atteint idempotence. 
+
+\begin{figure}[h!]
+\hspace{-0.2\textwidth}\input{data/tex/rectSkel.tex}
+\vspace{-40mm}
+	\caption{Image d'origine, un rectangle, \`{a} gauche, et, \`{a} droite, le squelette.}
+	\label{rectSkel}
+\end{figure}
+\begin{figure}[h]
+\hspace{-0.2\textwidth}\input{data/tex/veauSkel.tex}
+\vspace{-40mm}
+	\caption{Image de veau segment\'{e}e, \`{a} gauche, et, \`{a} droite, le squelette.}
+	\label{rectSkel}
+\end{figure}
+
+\clearpage
 
 \end{document}
 
