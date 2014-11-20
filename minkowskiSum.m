@@ -7,30 +7,30 @@ function Xb = minkowskiSum(X,b)
 
 	dlPlus = 0;
 	dlMoins = 0;
-	if mod(lb,2)~=0 
-		dlPlus = floor(lb/2);%2n+1
-	else 
-		dlPlus = floor(lb/2)+1;
-	endif
-	if mod(lb,2)~=0 
-		dlMoins = floor(lb/2);%2n+1
-	else 
-		dlMoins = floor(lb/2);
-	endif
+	%if mod(lb,2)~=0 
+	%	dlPlus = floor(lb/2);%2n+1
+	%else 
+		dlPlus = lb-floor((size(b,1)+1)/2);%floor(lb/2)+1;
+	%endif
+	%if mod(lb,2)~=0 
+	%	dlMoins = floor(lb/2);%2n+1
+	%else 
+		dlMoins = floor((size(b,1)+1)/2)-1;%floor(lb/2);
+	%endif
 
 
 	dcPlus = 0;
 	dcMoins = 0;
-	if mod(cb,2)~=0 
-		dcPlus = floor(cb/2);%2n+1
-	else 
-		dcPlus = floor(cb/2)+1;
-	endif
-	if mod(cb,2)~=0 
-		dcMoins = floor(cb/2);%2n+1
-	else 
-		dcMoins = floor(cb/2);
-	endif
+	%if mod(cb,2)~=0 
+	%	dcPlus = floor(cb/2);%2n+1
+	%else 
+		dcPlus = cb-floor((size(b,2)+1)/2);%floor(cb/2)+1;
+	%endif
+	%if mod(cb,2)~=0 
+	%	dcMoins = floor(cb/2);%2n+1
+	%else 
+		dcMoins = floor((size(b,2)+1)/2)-1;%floor(cb/2);
+	%endif
 
 	[dc, dl] = meshgrid(-dlMoins:dlPlus,-dcMoins:dcPlus);
 
