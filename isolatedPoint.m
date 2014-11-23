@@ -39,8 +39,14 @@ Bbg = [0 1 0; 1 0 1; 0 1 0];
 
 Xb = hitMiss(imCoinsBin,Bfg,Bbg);
 
+Xb2 = bwhitmiss(imCoinsBin,Bfg,Bbg);
+
 imRes = repmat(and(imCoinsBin,not(Xb)), [1 1 3]);
 imRes(:,:,1) = imRes(:,:,1) + Xb;
+
+
+imRes2 = repmat(and(imCoinsBin,not(Xb2)), [1 1 3]);
+imRes2(:,:,1) = imRes2(:,:,1) + Xb;
 
 
 figure(2)
@@ -51,8 +57,11 @@ imshow(double(imRes))
 
 figure(3)
 imshow(double(imRes))
-print('-dtex','data/tex/points.tex')
+%print('-dtex','data/tex/points.tex')
 
+
+figure(4)
+imshow(double(imRes2))
 
 
 
