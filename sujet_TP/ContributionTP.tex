@@ -33,27 +33,27 @@
 \begin{figure}[H]
 \begin{center}
 \includegraphics[]{ReconstructionParMarqueurs.jpg}
-\caption{\textit{Image d'un tapis d'épines de pin, seuillée pour en faire une image binaire. On construit une image ''marqueur'' constituée de 10 ''points'' indiquant des zones à reconstruire. On reconstruit une nouvelle image constituée des zones blanches de l'image seuillée qui avaient au moins un pixel commun avec un pixel blanc de l'image marqueur.}}
+\caption{\textit{Image d'un tapis d'\'{e}pines de pin, seuill\'{e}e pour en faire une image binaire. On construit une image ``marqueur'' constitu\'{e}e de 10 ``points'' indiquant des zones \`{a} reconstruire. On reconstruit une nouvelle image constitu\'{e}e des zones blanches de l'image seuill\'{e}e qui avaient au moins un pixel commun avec un pixel blanc de l'image marqueur.}}
 \label{rpm}
 \end{center}
 \end{figure}%
 
 \newpage
 
-Pour comprendre la reconstruction par marqueurs, tapez le programme Matlab ci-dessous dont une trace d'exécution est donnée par la Fig. \ref{rpm}. Comprenez-en les différentes étapes et commentez-les.
+Pour comprendre la reconstruction par marqueurs, tapez le programme Matlab ci-dessous dont une trace d'ex\'{e}cution est donn\'{e}e par la Fig. \ref{rpm}. Comprenez-en les diff\'{e}rentes \'{e}tapes et commentez-les.
 
 \begin{verbatim}
 clear all;close all;clc;
 set(gcf,'color','w');%fond blanc
-f=imread('aiguilles_pin.jpg');%à remplacer par une image de votre choix
+f=imread('aiguilles_pin.jpg');%\`{a} remplacer par une image de votre choix
 f=f(1:512,1:512);
 [a,b]=size(f);
 subplot(2,2,1);imshow(f);title('image originale');
 f=(f>200);
 whos f
 f=im2double(f);
-subplot(2,2,2);imshow(f);title('image seuillée');
-marq=zeros(a,b);% équivalent à : m=zeros(size(f));
+subplot(2,2,2);imshow(f);title('image seuill\'{e}e');
+marq=zeros(a,b);% \'{e}quivalent \`{a} : m=zeros(size(f));
 for k=1:10;
     marq(ceil(a*rand),ceil(b*rand))=1;
 end;
@@ -65,7 +65,7 @@ subplot(2,2,4);imshow(g);title('image reconstruite');
 
 \bigskip
 
-Travail personnel : Comment pourrait-on se servir de la reconstruction par marqueur pour éliminer les aiguilles qui touchent le bord de l'image (indication : prendre comme marqueur le bord de l'image)
+Travail personnel : Comment pourrait-on se servir de la reconstruction par marqueur pour \'{e}liminer les aiguilles qui touchent le bord de l'image (indication : prendre comme marqueur le bord de l'image)
 
 \end{document}
 

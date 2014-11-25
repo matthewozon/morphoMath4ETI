@@ -27,7 +27,7 @@
 \begin{document}
 \maketitle
 
-\section{introduction} 
+\section{Introduction} 
 \paragraph{Rappel}
 Avant tout, nous vous rappelons, m\^{e}me si ce n'est pas n\'{e}cessaire, que la documentation et des exemples consernant les fonctions que vous allez utiliser est disponnible soit dans le logiciel via la commande \textit{help} soit en cherchant sur le web via votre moteur de recherche pr\'{e}f\'{e}rer. 
 
@@ -38,12 +38,20 @@ Ce premier TP du module de TSI vous permet de vous familiariser avec :
 	\item les op\'{e}rateurs \'{e}l\'{e}mentaire de morphologie math\'{e}matiques
 	\item des applications un peu plus avanc\'{e}es se basant sur les op\'{e}rateurs d’\'{e}rosion, dilatation, ouverture et fermeture.
 \end{itemize}
-
 \subsection{\`{A} rendre}
 De votre part, nous attendons deux \'{e}l\'{e}ments : 
 \begin{itemize}
 	\item Un compte rendu expliquant votre d\'{e}marche, vos codes : il faut que vous montriez que vous avez compris de quoi il s'agit de fa\c{}on concise (8 pages maximum sans les figures)
 	\item Des script : un pour chaque question avec des figures si n\'{e}cessaire (toujours comment\'{e}es)
+\end{itemize}
+vous disposez d'une semaine pour rendre votre TP sous format \'{e}lectronique. Un depot sera ouvert sur le \href{https://e-campus.cpe.fr/course/view.php?id=2548}{e-campus} a partir du milieu de la semaine. Vous devrez y deposer une archive (zip ou tar) contenant : 
+\begin{itemize}
+	\item deux dossiers : un dossier contenant votre r\'{e}sum\'{e} et vos figures, un autre contenant vos script
+	\item les script doivent \^{e}tre clairement identifiable. On doit pouvoir savoir de quelle question il s'agit dans le nom des fichiers ``.m''. 
+	\item Les script doivent montrer les \'{e}l\'{e}ments de r\'{e}ponse que ce soit en figure ou en chiffre. Chaque morceau de code doit \^{e}tre comment\'{e} lorsqu'il s'agit d'une op\'{e}ration ``importante''.
+	\item Votre r\'{e}sum\'{e} (au format pdf), qui ne doit pas n\'{e}cessairement \^{e}tre long (on ne note pas au kilo), doit comporter les \'{e}l\'{e}ments de bases pour \^{e}tre identifier : noms et pr\'{e}noms du bin\^{o}me ainsi que le nom du TP. SI vous faite r\'{e}f\'{e}rence a du cours, il faut \'{e}crire de fa\c{}on compl\`{e}te la propri\'{e}t\'{e} (pas de cf...). Les figures ne sont pas des justifications par elles me\^{e}mes. Elles doivent \^{e}tre comment\'{e}es et expliques. Nous vous conseillons de faire une petit r\'{e}sum\'{e} par question comportant objectif, m\'{e}thode, r\'{e}sultat et conclusion (cela peut \^{e}tre aussi court que deux ou trois phrases).
+	\item Pour tout autres questions, nous somme disposes \`{a} vous r\'{e}pondre soit par mail ou a nos bureau respectifs.
+	\item Vous disposez de 10 jours apr\`{e}s le TP pour nous rendre votre compte rendu. Nous nous attendons \`{a} ce que vous aillez le temps de faire les parties 2 et 3 au cours du TP, cependant, il faut traiter toutes les parties, en particulier la section 4.6 (reconstruction par marqueurs) que nous vous sugg\'{e}rons de faire apr\`{e}s la section 3 (du point de vue temporel).
 \end{itemize}
 
 \subsection{Les moyens}
@@ -62,15 +70,21 @@ Vous trouverez toutes les ressources (r\'{e}sume de cours, \'{e}nonc\'{e} de TP 
 
 \section{Prise en main}
 Dans cette section vous allez voir comment faire pour acc\'{e}der aux donn\'{e}es d'une image et la transformer. Commencez par cr\'{e}er un fichier ``TP\_moprho\_init.m'' qui commencera par les trois lignes suivantes : 
-\begin{itemize}
-	\item[] clc
-	\item[] clear all
-	\item[] close all
-\end{itemize}
+\begin{verbatim}
+ clc %efface ce qui est ecrit dans le terminal
+clear all %libere les variable (elles deviennent inconues apres cette commande)
+close all %ferme toutes les figures
+\end{verbatim}
 pour \'{e}viter d'avoir des conflit de d\'{e}finition et des affichages multiple en navigant entre les fichiers.
 
 \subsection{Affichage d'une image}
-Testez le script suivant et d\'{e}crivez ce qu'il fait. Apportez des modifications si n\'{e}cessaire.
+Testez le script suivant et d\'{e}crivez ce qu'il fait. Apportez des modifications si n\'{e}cessaire. Nous attirons votre attention sur les points suivant : 
+
+\begin{itemize}
+	\item une image est g\'{e}n\'{e}ralement en couleur, il y a donc plusieurs canaux (R: red, G: green et B: blue). Nous vous sugg\'{e}rons de vous en rendre compte en utilisant commande \textit{size} sur la variable \textit{imRGB}.
+	\item une image est tr\`{e}s souvent cod\'{e}e sur 8 bits lorsqu'il s'agit de photo ``domestiques'', pensez donc aux probl\`{e}mes d'overflow lorsque vous manipulez les images. Le ``castage'' de type existe aussi sous octave, ex : \textit{x=5.5; y = uint8(x);}.
+	\item Essayez la commande \textit{colormap} avec diff\'{e}rent arguments et apr\`{e}s diff\'{e}rent type d'affichage.
+\end{itemize}
 
 \begin{verbatim}
 clear all;
@@ -94,7 +108,8 @@ title('mon autre titre')
 
 %transformation de l'image en niveau de gris methode 1
 class(imRGB(1)) %affiche le type de variable
-imGray1 = imRGB(:,:,1) + imRGB(:,:,2) + imRGB(:,:,3); %somme des trois composantes... mais est-ce correcte?
+imGray1 = imRGB(:,:,1) + imRGB(:,:,2) + imRGB(:,:,3); %somme des trois composantes...
+% mais est-ce correcte?
 
 %transformation de l'image en niveau de gris methode 2
 imGray2 = rgb2gray(imRGB);
@@ -116,6 +131,9 @@ title('methode de transformation : commande rgb2gray')
 
 Maintenant que vous savez charger une image en m\'{e}moire et que vous pouvez la transformer en niveaux de gris, vous allez chercher \`{a} binariser une image et \`{a} extraire des contours. Vous utiliserez le script suivant en apportant les modifications n\'{e}cessaires et vous expliquerez ce que fait le script.
 
+~~
+
+~~
 \begin{verbatim}
 clear all;
 close all;
@@ -141,7 +159,8 @@ imGradc = conv2(imGray, Fc,'same');
 imGradNorm = ...;
 
     %seuillage de la norme du gradient pour extraction des contours
-        %pour savoir a quelle valeur seuiller, on affiche l'histogramme de l'image a l'aide de la commande imhist
+        %pour savoir a quelle valeur seuiller, on affiche l'histogramme de l'image
+        % a l'aide de la commande imhist
 imhist...
         %pour fixer le seuil, on choisit de demander a l'utilisateur le taper dans le prompt
 seuil = input("nom text\n")
@@ -162,7 +181,7 @@ figure(1)
 \subsection{Somme et soustraction de Minkowski}
 En vous aidant des notes de cours (mopho\_resume\_cours.pdf) et des fichier minkowskiSum.m et minkowskiSub.m, vous impl\'{e}menterez les op\'{e}rations d'addition et de soustraction Minkowskiennes. Attention, votre code ne doit pas contenir plus de deux boucles \textbf{for}. Vous testerez vos impl\'{e}mentations sur des \'{e}l\'{e}ments simple comme un cercle avec un carre. 
 
-\noindent\textbf{Attention} : ces deux codes sont tr\`{e}s importants car toutes les autres parties reposent dessus, il faut donc que vous pr\^{e}tiez une attention toute particuli\`{e}re \`{a} la validation de cette \'{e}tape. 
+\noindent\textbf{Attention} : ces deux codes sont tr\`{e}s importants car toutes les autres parties reposent dessus, il faut donc que vous pr\^{e}tiez une attention toute particuli\`{e}re \`{a} la validation de cette \'{e}tape.  \textbf{La transpos\'{e}e} d'un ensemble n'est pas sa transpos\'{e}e au sens matricielle (en g\'{e}n\'{e}rale).
 
 \noindent\textbf{Conseil} : pour la validation, vous pouvez cr\'{e}er des objet simple comme le disque centre sur l'origine et de rayon 5 que r\'{e}alise le script suivant.
 \begin{verbatim}
@@ -185,9 +204,11 @@ X = sqrt(dC.^2 + dL.^2)<5;
 
 \noindent\textbf{Validation} vous testerez sur l'image ``bin.png'' en ajoutant du bruit (des points al\'{e}atoirement distribues pour lesquels l'\'{e}tat du pixel est compl\'{e}ment\'{e}) puis en la d\'{e}bruitant. Indication : utilisez \begin{verbatim} N = randn(300,400)>2.0;\end{verbatim} pour g\'{e}n\'{e}rer le bruit et la commande \textit{xor} pour ajouter le bruit a l'image. Vous pourrez comparer votre r\'{e}sultat \`{a} celui de \textbf{bwhitmiss}.
 
+\textbf{Attention } la fichier \textit{bwhitmiss.m} \`{a} un probl\`{e}me. Il faut changer dans son script \textit{erode} par \textit{imerode}. Pour ce faire, puisque vous n'avez pas les droit administrateur, vous devez copier le fichier \textit{bwhitmiss.m} dans votre repertoire de travail et changer cette version. Pour localiser la le fichier  \textit{bwhitmiss.m}, vous pouvez ouvrir un terminal (non octave) et taper :  \textit{locate bwhitmiss.m}, la commande \textit{locate} localise toutes les occurence du fichier  \textit{bwhitmiss.m}, il faut donc choisir celui correspondant a la source octave.
+
 \noindent\textbf{\`{A} rendre} : la preuve en image que votre impl\'{e}mentation fonctionne avec une explication de la m\'{e}thode que vous utilisez pour d\'{e}bruiter l'image.
 
-\clearpage
+%\clearpage
 \section{Applications}
 L'id\'{e}e de cette partie est de mettre en oeuvre votre travail a des situations un peu plus complexe.
 \subsection{D\'{e}tection de p\'{e}riode}
@@ -209,7 +230,9 @@ L'id\'{e}e de cette partie est de mettre en oeuvre votre travail a des situation
 imBin = sqrt(dC.^2 + dL.^2)<43;
 
 %creation de composantes a enlever du disque
-composanteConnex = (sqrt((dC+5).^2 + dL.^2)<5) | (sqrt(dC.^2 + (dL+10).^2)<5) | (sqrt((dC-15).^2 + dL.^2)<5) | (sqrt((dC+25).^2 + dL.^2)<5) | (sqrt(dC.^2 + (dL-20).^2)<5) | (sqrt(dC.^2 + (dL+30).^2)<5);
+composanteConnex = (sqrt((dC+5).^2 + dL.^2)<5) | (sqrt(dC.^2 + (dL+10).^2)<5) | ...
+(sqrt((dC-15).^2 + dL.^2)<5) | (sqrt((dC+25).^2 + dL.^2)<5) | (sqrt(dC.^2 + (dL-20).^2)<5) | ...
+(sqrt(dC.^2 + (dL+30).^2)<5);
 
 %ajout des composantes
 imBin = and(imBin,not(composanteConnex));
@@ -230,9 +253,51 @@ Essayer de compter le nombre de trou sur le disque de frein ``disque\_frein\_bin
 
 
 
+%\bigskip
+
+%\normalsize
+
+\subsection{Reconstruction par marqueurs}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[]{ReconstructionParMarqueurs.jpg}
+\caption{\textit{Image d'un tapis d'\'{e}pines de pin, seuill\'{e}e pour en faire une image binaire. On construit une image ``marqueur'' constitu\'{e}e de 10 ``points'' indiquant des zones \`{a} reconstruire. On reconstruit une nouvelle image constitu\'{e}e des zones blanches de l'image seuill\'{e}e qui avaient au moins un pixel commun avec un pixel blanc de l'image marqueur.}}
+\label{rpm}
+\end{center}
+\end{figure}%
+
+\newpage
+
+Pour comprendre la reconstruction par marqueurs, tapez le programme Matlab ci-dessous dont une trace d'ex\'{e}cution est donn\'{e}e par la Fig. \ref{rpm}. Comprenez-en les diff\'{e}rentes \'{e}tapes et commentez-les.
+
+\begin{verbatim}
+clear all;close all;clc;
+set(gcf,'color','w');%fond blanc
+f=imread('aiguilles_pin.jpg');%\`{a} remplacer par une image de votre choix
+f=f(1:512,1:512);
+[a,b]=size(f);
+subplot(2,2,1);imshow(f);title('image originale');
+f=(f>200);
+whos f
+f=im2double(f);
+subplot(2,2,2);imshow(f);title('image seuill\'{e}e');
+marq=zeros(a,b);% \'{e}quivalent \`{a} : m=zeros(size(f));
+for k=1:10;
+    marq(ceil(a*rand),ceil(b*rand))=1;
+end;
+marq=imdilate(marq,ones(20),'same');
+subplot(2,2,3);imshow(marq);title('marqueur');
+g=imreconstruct(marq,f);
+subplot(2,2,4);imshow(g);title('image reconstruite');
+\end{verbatim}
+
+\bigskip
+
+Travail personnel : Comment pourrait-on se servir de la reconstruction par marqueur pour \'{e}liminer les aiguilles qui touchent le bord de l'image (indication : prendre comme marqueur le bord de l'image)
 
 
-\includepdf[pages={-}]{ContributionTP1.pdf}
+%\includepdf[pages={-}]{ContributionTP1.pdf}
 
 
 \end{document}
